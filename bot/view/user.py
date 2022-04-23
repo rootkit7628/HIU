@@ -161,7 +161,7 @@ class UserView:
             file =  cmd.split('/')[-1]
             file = file.split('?')[0]
             extension = file.split('.')[-1]
-            wget.download(cmd, f'/home/rivo2302/Public/Projets/HIU/bot/assets/public/{str(file)}.{extension}')
+            wget.download(cmd, f'/opt/HIU/bot/assets/public/{str(file)}.{extension}')
             tok = token_hex(16)
             fichier.addAttachment(f"{str(file)}",1,sender_id,tok)
             chat.send_message(sender_id,"Merci votre fichier est uploader")
