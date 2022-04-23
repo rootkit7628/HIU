@@ -5,11 +5,11 @@ class UserModel(Model):
 
     def __init__(self, conf):
         super().__init__(conf)
-    
+
     @Model.verif_db
-    def get_lang(self,id):
+    def get_lang(self, id):
         req = "SELECT lang from amp_user WHERE user_id = %s"
-        self.cursor.execute(req,(id,))
+        self.cursor.execute(req, (id,))
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
@@ -19,12 +19,12 @@ class UserModel(Model):
         req = 'UPDATE amp_user set lang = %s WHERE user_id = %s'
         self.cursor.execute(req, (lang, user_id))
         self.db.commit()
-    
+
 
 class Login(Model):
     def __init__(self, conf):
         super().__init__(conf)
-    
+
     # ======================= CONNEXION USER ========================
     @Model.verif_db
     def loginFacebook(self, username):
@@ -50,7 +50,7 @@ class Amp_user(Model):
     def __init__(self, conf):
         super().__init__(conf)
 
-    
+
     # ============================== GET USER ======================
     @Model.verif_db
     def getAllAmp_user(self):
@@ -61,7 +61,7 @@ class Amp_user(Model):
         self.db.commit()
         return data
 
-    
+
     @Model.verif_db
     def getAmp_user(self, id):
         requete = """SELECT id, username, last_use, lang
@@ -71,7 +71,6 @@ class Amp_user(Model):
         self.db.commit()
         return data
 
-    
     # ============================== ADD USER =========================
     @Model.verif_db
     def addAmp_user(self, username, password, user_id):
@@ -80,7 +79,6 @@ class Amp_user(Model):
         self.cursor.execute(requete, (username, password, user_id))
         self.db.commit()
         return 1
-    
 
     # ============================= UPDATE USER =======================
     @Model.verif_db
@@ -91,7 +89,6 @@ class Amp_user(Model):
         self.db.commit()
         return 1
 
-
     @Model.verif_db
     def verifyPassword(self, password, id):
         requete = """SELECT True FROM amp_user
@@ -100,7 +97,6 @@ class Amp_user(Model):
         data = self.cursor.fetchone()[0]
         self.db.commit()
         return data if data == 1 else 0
-
 
     @Model.verif_db
     def updateAmp_userPassword(self, lastPassword, newPassword, id):
@@ -112,7 +108,6 @@ class Amp_user(Model):
             status = 1
         return status
 
-
     @Model.verif_db
     def updateAmp_userLang(self, lang, id):
         requete = """UPDATE amp_user SET lang = %s WHERE id = %s"""
@@ -120,15 +115,14 @@ class Amp_user(Model):
         self.db.commit()
         return 1
 
-    
     # ============================= DELETE USER =======================
     # ******************** à penser encore ****************************
+
 
 class History(Model):
     def __init__(self, conf):
         super().__init__(conf)
 
-    
     # ========================= GET HISTORY ===========================
     @Model.verif_db
     def getAllHistory(self):
@@ -139,7 +133,6 @@ class History(Model):
         self.db.commit()
         return data
 
-
     @Model.verif_db
     def getHistory(self, user_id):
         requete = """SELECT id, date, attachment_id, action, user_id
@@ -148,7 +141,6 @@ class History(Model):
         data = self.cursor.fetchall()[0]
         self.db.commit()
         return data
-    
 
     # ============================ ADD HISTORY =========================
     @Model.verif_db
@@ -158,14 +150,14 @@ class History(Model):
         self.cursor.execute(requete, (attachment_id, action, user_id))
         self.db.commit()
         return 1
-    
+
     # # ========================== UPDATE HISTORY =========================
     # def updateHistory
 
-class Attachment(Model, History):
+
+class Attachment(History):
     def __init__(self, conf):
         super().__init__(conf)
-
 
     # ===================== GET ATTACHMENT ===================
     @Model.verif_db
@@ -177,7 +169,6 @@ class Attachment(Model, History):
         self.db.commit()
         return data
 
-    
     @Model.verif_db
     def getAttachment(self, id):
         requete = """SELECT a.id, a.nom, a.status, a.user_id
@@ -189,7 +180,6 @@ class Attachment(Model, History):
         self.db.commit()
         return data
 
-
     # ======================== ADD ATTACHEMENT =====================
     @Model.verif_db
     def addAttachment(self, nom, status, user_id):
@@ -200,18 +190,17 @@ class Attachment(Model, History):
         last_id = self.cursor.lastrowid
         identifiant = user_id
         self.db.commit()
-        return History.addHistory(self, attachment_id = last_id, action="UP", user_id=identifiant)
+        return History.addHistory(self, attachment_id=last_id, action="UP", user_id=identifiant)
 
     # ====================== UPDATE ATTACHMENT =======================
     @Model.verif_db
     def updateAttachmentStatus(self, status, id, user_id):
-        requete = """UPDATE attachment SET status = %s 
+        requete = """UPDATE attachment SET status = %s
             WHERE (id = %s AND user_id = %s)"""
         self.cursor.execute(requete, (status, id, user_id))
         self.db.commit()
         return 1
 
-    
     # ==================== DELETE ATTACHMENT =======================
     def deleteAttachment(self, id, user_id):
         requete = """DELETE FROM attachment WHERE (id = %s AND user_id = %s)"""
