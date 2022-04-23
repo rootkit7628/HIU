@@ -21,36 +21,35 @@
     },
 
     "persistant1" : {
-        "en" :"Main menu" ,
-        "fr":"Menu principale" ,
-        "mg":"Voalohany"
+        "en" :"📝Main menu" ,
+        "fr":"📝Menu principale" ,
+        "mg":"📝Voalohany"
     },
-
     "persistant2" : {
-        "en" :"Contact us" ,
-        "fr":"Nous contacter" ,
-        "mg":"Hiresaka aminay"
+        "en" :"📞Contact us " ,
+        "fr":"📞Nous contacter" ,
+        "mg":"📞Hiresaka aminay"
     },
 
     "persistant3" : {
-        "en" :"Choose language" ,
-        "fr":"Choix de langue" ,
-        "mg":"Misafidy fiteny"
+        "en" :"📃Choose language " ,
+        "fr":"📃Choix de langue" ,
+        "mg":"📃Misafidy fiteny"
     },
     "menu1" : {
-        "en" :"Receive" ,
-        "fr":"Recevoir" ,
-        "mg":"Maka"
+        "en" :"Receive 📩" ,
+        "fr":"Recevoir 📩" ,
+        "mg":"Maka 📩"
     },
     "menu2" : {
-        "en" :"Send" ,
-        "fr":"Envoyer" ,
-        "mg":"Mandefa"
+        "en" :"Send 📤" ,
+        "fr":"Envoyer 📤" ,
+        "mg":"Mandefa 📤"
     },
     "menu3" : {
-        "en" :"History" ,
-        "fr":"Historique" ,
-        "mg":"Lisitra"
+        "en" :"History 🗂️" ,
+        "fr":"Historique 🗂️" ,
+        "mg":"Lisitra 🗂️"
     }
 
 

@@ -45,6 +45,13 @@ def menus1(sender_id, cmd,**extends):
     lang = user_model.get_lang(sender_id)
     user.menu1(sender_id,lang)
 
+@ampalibe.command('/download') 
+def downfile(sender_id,cmd,**extends):
+    lang = user_model.get_lang(sender_id)
+    if extends.get("name"):
+        name = extends.get("name")
+        user.file_send(sender_id,name)
+
 @ampalibe.command('/menu2')
 def menus2(sender_id, cmd,**extends):
     lang = user_model.get_lang(sender_id)
@@ -53,15 +60,32 @@ def menus2(sender_id, cmd,**extends):
 @ampalibe.command('/menu3')
 def menus3(sender_id, cmd,**extends):
     lang = user_model.get_lang(sender_id)
-    user.menu3(sender_id,lang)
+    user.historique(sender_id,lang)
 
+@ampalibe.command('/token')
+def token(sender_id,cmd,**extends):
+    lang = user_model.get_lang(sender_id)
+    user.menu_token(sender_id,lang)
+
+@ampalibe.command('/qr_code')
+def token(sender_id,cmd,**extends):
+    lang = user_model.get_lang(sender_id)
+    user.menu_qr_code(sender_id,lang)
 
 # ------------------ ACTION -------------------------------   
 @ampalibe.action('/get_lang')
 def get_lang(sender_id , cmd, **extends):
+    lang = user_model.get_lang(sender_id)
     user.update_lang(sender_id,cmd)
 
 
+@ampalibe.action('attente_file')
+def upload(sender_id,cmd, **extends):
+    lang = user_model.get_lang(sender_id)
+    user.upload_file(sender_id,cmd)
 
-
-
+@ampalibe.action('attente_code')
+def verify_fichier(sender_id,cmd, **extends):
+    lang = user_model.get_lang(sender_id)
+    user.send_file(sender_id,cmd)
+   
