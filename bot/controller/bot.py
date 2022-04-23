@@ -4,6 +4,7 @@ from model import UserModel
 from conf import Configuration
 from ampalibe.ui import QuickReply
 
+
 user = UserView()
 user_model = UserModel(Configuration())
 
