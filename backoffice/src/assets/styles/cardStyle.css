@@ -1,0 +1,66 @@
+/*reglage du texte overflow dans le card allcontenu*/
+.description{
+    display: -webkit-box;
+    min-height: 90px;
+    max-height: 90px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/*taille de l'image dans le card profil*/
+.image-size{
+    width: 130px;
+    height: 130px;
+    border-radius: 60px;
+}
+
+/*style pour modification photo profil card profil*/
+
+#imageprofil { 
+    margin: 10px 0px;
+}
+@media screen and (max-width: 650px){
+    .photo {
+        padding: 0px auto;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+@media screen and (max-width: 1379px) {
+    .video {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0px auto;
+    }
+}
+@media screen and (min-width: 1380px) {
+    .video {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0px auto;
+    }
+}
+
+.sauvegarde {
+    margin: 0px 80px;
+}
+
+/*POP UP STYLE*/
+
+.popup{
+    position: absolute;
+    z-index: 1;
+    opacity: 0.9;
+    top: 400px;
+    left: 690px;
+    display: flex;
+    width: 30%;
+    flex-direction: row;
+}
