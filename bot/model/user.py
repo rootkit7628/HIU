@@ -1,4 +1,3 @@
-from select import select
 from ampalibe import Model
 
 
@@ -125,8 +124,45 @@ class Amp_user(Model):
     # ============================= DELETE USER =======================
     # ******************** à penser encore ****************************
 
+class History(Model):
+    def __init__(self, conf):
+        super().__init__(conf)
 
-class Attachment(Model):
+    
+    # ========================= GET HISTORY ===========================
+    @Model.verif_db
+    def getAllHistory(self):
+        requete = """SELECT id, date, attachment_id, action, user_id
+            FROM history"""
+        self.cursor.execute(requete)
+        data = self.cursor.fetchall()[0]
+        self.db.commit()
+        return data
+
+
+    @Model.verif_db
+    def getHistory(self, user_id):
+        requete = """SELECT id, date, attachment_id, action, user_id
+            FROM history WHERE user_id = %s"""
+        self.cursor.execute(requete, (user_id,))
+        data = self.cursor.fetchall()[0]
+        self.db.commit()
+        return data
+    
+
+    # ============================ ADD HISTORY =========================
+    @Model.verif_db
+    def addHistory(self, attachment_id, action, user_id):
+        requete = """INSERT INTO history(date, attachment_id, action, user_id)
+            VALUES(NOW(), %s, %s, %s)"""
+        self.cursor.execute(requete, (attachment_id, action, user_id))
+        self.db.commit()
+        return 1
+    
+    # # ========================== UPDATE HISTORY =========================
+    # def updateHistory
+
+class Attachment(Model, History):
     def __init__(self, conf):
         super().__init__(conf)
 
@@ -143,10 +179,12 @@ class Attachment(Model):
 
     
     @Model.verif_db
-    def getAttachment(self, user_id):
-        requete = """SELECT id, nom, status, user_id
-            FROM attachmemnt WHERE user_id = %s"""
-        self.cursor.execute(requete, (user_id,))
+    def getAttachment(self, id):
+        requete = """SELECT a.id, a.nom, a.status, a.user_id
+            FROM attachmemnt a
+            JOIN amp_user u ON a.user_id = u.id
+            WHERE u.id = %s"""
+        self.cursor.execute(requete, (id,))
         data = self.cursor.fetchall()[0]
         self.db.commit()
         return data
@@ -155,11 +193,14 @@ class Attachment(Model):
     # ======================== ADD ATTACHEMENT =====================
     @Model.verif_db
     def addAttachment(self, nom, status, user_id):
+        status = 0
         requete = """INSERT INTO attachment(nom, status, user_id)
             VALUES(%s, %s, %s)"""
         self.cursor.execute(requete, (nom, status, user_id))
+        last_id = self.cursor.lastrowid
+        identifiant = user_id
         self.db.commit()
-        return 1
+        return History.addHistory(self, attachment_id = last_id, action="UP", user_id=identifiant)
 
     # ====================== UPDATE ATTACHMENT =======================
     @Model.verif_db
@@ -177,13 +218,3 @@ class Attachment(Model):
         self.cursor.execute(requete, (id, user_id))
         self.db.commit()
         return 1
-
-
-class History(Model):
-    def __init__(self, conf):
-        super().__init__(conf)
-
-    
-    # ========================= GET HISTORY ===========================
-    def getAllHistory(self):
-        requete = """SELECT id, """
