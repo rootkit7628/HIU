@@ -187,7 +187,8 @@ class UserView:
             chat.send_message(sender_id,f"{tok}")
             img = qrcode.make(tok)
             img.save('assets/public/qr.png')
-            chat.send_file_url(sender_id, f"{conf.APP_URL}/asset/qr.png",filetype='image')
+            res = chat.send_file_url(sender_id, f"{conf.APP_URL}/asset/qr.png",filetype='image')
+            print(res)
             query.set_action(sender_id, None)
         except Exception as e:
             chat.send_message(sender_id,"Désolé 😢, il y a eu une érreur lors du télechargement, veuillez réessayez s'il vous plaît")
@@ -213,7 +214,7 @@ class UserView:
         list_items.append(
             Element(
                 title=res,
-                subtitle="23 - 04 - 2022",
+                subtitle="Date upload : 23-04-2022",
                 image_url=f"{conf.APP_URL}/asset/icon_file.jpg",
                 buttons=buttons,
             )
@@ -237,13 +238,13 @@ class UserView:
                 Button(
                     type="postback",
                     title="Télecharger📂",
-                    payload=Payload("/file", id_item=item[0]),
+                    payload=Payload("/download", name=item[0]),
                 )
             ]
             list_items.append(
                 Element(
                     title=item[0],
-                    subtitle="23 - 04 - 2022",
+                    subtitle="Date upload : 23-04-2022",
                     image_url=f"{conf.APP_URL}/asset/icon_file.jpg",
                     buttons=buttons,
                 )
