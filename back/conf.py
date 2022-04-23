@@ -7,9 +7,9 @@ load_dotenv()
 
 def database(**kwargs):
     return {
-        'host': 'iteam-s.mg',
+        'host': env.get('HOST'),
         'user': env.get('ITEAMS_DB_USER'),
         'password': env.get('ITEAMS_DB_PASSWORD'),
-        'database': 'FORUM',
+        'database': 'HIU',
         'charset': 'utf8mb4'
     }

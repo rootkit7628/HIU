@@ -5,4 +5,4 @@ flask-bcrypt
 gunicorn
 flask
 flask_cors
-pillow
+# pillow
