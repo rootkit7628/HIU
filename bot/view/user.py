@@ -99,14 +99,33 @@ class UserView:
     def started(self,sender_id,lang):
         chat.send_action(sender_id,"mark_seen")
         self.persistant_menu(sender_id,lang)
-        chat.send_message(sender_id, "Roso 🔥🔥 \n Un bot qui va vous aider dans vos transférer de données 🇬🇧🇫🇷🇲🇬 .")
+        chat.send_message(sender_id, 
+            """
+                Bienvenue Arlème, Roso 🔥🔥 \n Un bot qui va vous aider dans vos transférer de données 🇬🇧🇫🇷🇲🇬. 
+            """
+            )
+
         self.demande_langue(sender_id,lang)
 
     ### Les peristantes menus
     def persistant1(self ,sender_id,lang) :
         chat.send_action(sender_id,"mark_seen")
         self.persistant_menu(sender_id,lang)
-        chat.send_message(sender_id,"Persistante menu 1")
+        quick_rep = [
+            QuickReply(
+                title=translate("menu1",lang),
+                payload="/menu1",
+            ),
+            QuickReply(
+                title=translate("menu2",lang),
+                payload="/menu2",
+            ),
+            QuickReply(
+                title=translate("menu3",lang),
+                payload="/menu3",
+            ),
+        ]
+        chat.send_quick_reply(sender_id,quick_rep,translate("menu_principale",lang))
 
     def persistant2(self ,sender_id,lang) :
         chat.send_action(sender_id,"mark_seen")
@@ -132,20 +151,19 @@ class UserView:
     def menu_token(self,sender_id,lang) :
         chat.send_action(sender_id,"mark_seen")
         self.persistant_menu(sender_id,lang)
-        chat.send_message(sender_id,"Veuiller envoyer votre token.") 
+        chat.send_message(sender_id,"Veuiller envoyer votre token 😊.") 
         query.set_action(sender_id, "attente_code")
       
     def menu_qr_code(self,sender_id,lang) :
         chat.send_action(sender_id,"mark_seen")
         self.persistant_menu(sender_id,lang)
-        chat.send_message(sender_id,"Veuiller envoyer votre qr code.") 
+        chat.send_message(sender_id,"Veuiller envoyer votre qr code 😊.") 
         query.set_action(sender_id, "attente_code")
-
 
     def menu2(self ,sender_id,lang) :
         chat.send_action(sender_id,"mark_seen")
         self.persistant_menu(sender_id,lang)
-        chat.send_message(sender_id,"Veuiller envoyer le fichier à envoyer.")
+        chat.send_message(sender_id,"Veuiller envoyer le fichier à envoyer 😊.")
         query.set_action(sender_id, "attente_file")
         
 
@@ -161,10 +179,10 @@ class UserView:
             file =  cmd.split('/')[-1]
             file = file.split('?')[0]
             extension = file.split('.')[-1]
-            wget.download(cmd, f'/opt/HIU/bot/assets/public/{str(file)}.{extension}')
+            wget.download(cmd, f'/opt/HIU/bot/assets/public/{str(file)}')
             tok = token_hex(16)
             fichier.addAttachment(f"{str(file)}",1,sender_id,tok)
-            chat.send_message(sender_id,"Merci votre fichier est uploader")
+            chat.send_message(sender_id,"Merci votre fichier est envoyé.")
             chat.send_message(sender_id, "Le token de récupération est :")
             chat.send_message(sender_id,f"{tok}")
             img = qrcode.make(tok)
@@ -172,29 +190,30 @@ class UserView:
             chat.send_file_url(sender_id, f"{conf.APP_URL}/asset/qr.png",filetype='image')
             query.set_action(sender_id, None)
         except Exception as e:
-            chat.send_message(sender_id,"Désolé , il y a eu une érreur lors du télechargement, veuillez réessayez s'il vous plaît")
+            chat.send_message(sender_id,"Désolé 😢, il y a eu une érreur lors du télechargement, veuillez réessayez s'il vous plaît")
     
     def send_file(self,sender_id,cmd):
         chat.send_action(sender_id,"mark_seen")      
         chat.send_message(sender_id,"On va vérifier si votre fichier existe")
         res = fichier.verif_attach(sender_id,cmd)
         if res == False :
-            chat.send_message(sender_id,"Votre fichier est introuvable.")
+            chat.send_message(sender_id,"Votre fichier est introuvable ‼️‼️.")
             query.set_action(sender_id, None)
             return
-        chat.send_message(sender_id,"On l'a trouvé on vous envoie ça de suite.")
+        chat.send_message(sender_id,"C'est bon✔️, je l'ai trouvé on vous envoie ça de suite.")
         list_items = []
 
         buttons = [
             Button(
                 type="postback",
-                title="Télecharger",
+                title="Télecharger📂",
                 payload=Payload("/download", name=res),
             )
         ]
         list_items.append(
             Element(
                 title=res,
+                subtitle="23 - 04 - 2022",
                 image_url=f"{conf.APP_URL}/asset/icon_file.jpg",
                 buttons=buttons,
             )
@@ -202,7 +221,6 @@ class UserView:
         # next=True for displaying directly next page button.
         chat.send_template(sender_id, list_items, next=True)
         query.set_action(sender_id, None)
-
 
     def file_send(self,sender_id ,name):
         chat.send_action(sender_id,"mark_seen") 
@@ -218,18 +236,18 @@ class UserView:
             buttons = [
                 Button(
                     type="postback",
-                    title="Télecharger",
+                    title="Télecharger📂",
                     payload=Payload("/file", id_item=item[0]),
                 )
             ]
             list_items.append(
                 Element(
                     title=item[0],
+                    subtitle="23 - 04 - 2022",
                     image_url=f"{conf.APP_URL}/asset/icon_file.jpg",
                     buttons=buttons,
                 )
             )
-
         # next=True for displaying directly next page button.
         chat.send_template(sender_id, list_items, next=True)
         query.set_action(sender_id, None)
