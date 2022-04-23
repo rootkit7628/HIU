@@ -1,0 +1,59 @@
+{
+    "demande_langue": {
+        "en": "😊Please choose your language:",
+        "fr": "😊Veuillez choisir votre langue :",
+        "mg": " 😊Fidio ny fiteninao azafady:"
+    },
+    "c_noter":{
+        "en": "Thanks. Noted✔️.",
+        "fr": "Merci ,c'est noté✔️." ,
+        "mg": "Misaotra, voaray zay✔️."
+    },
+    "menu_principale" : { 
+        "en":"😊What do you want to do?",
+        "fr":"😊Qu'est ce que vous voulez faire?",
+        "mg":"😊Inona ny tianao atao?"
+    },
+    "erreur" : {
+        "en" :"Sorry😥, there was an error ‼️." ,
+        "fr":"Désolé😥, il y a eu une érreur ‼️." ,
+        "mg":"Miala tsiny😥 fa nisy olana ‼️."
+    },
+
+    "persistant1" : {
+        "en" :"Main menu" ,
+        "fr":"Menu principale" ,
+        "mg":"Voalohany"
+    },
+
+    "persistant2" : {
+        "en" :"Contact us" ,
+        "fr":"Nous contacter" ,
+        "mg":"Hiresaka aminay"
+    },
+
+    "persistant3" : {
+        "en" :"Choose language" ,
+        "fr":"Choix de langue" ,
+        "mg":"Misafidy fiteny"
+    },
+    "menu1" : {
+        "en" :"Receive" ,
+        "fr":"Recevoir" ,
+        "mg":"Maka"
+    },
+    "menu2" : {
+        "en" :"Send" ,
+        "fr":"Envoyer" ,
+        "mg":"Mandefa"
+    },
+    "menu3" : {
+        "en" :"History" ,
+        "fr":"Historique" ,
+        "mg":"Lisitra"
+    }
+
+
+    
+
+}
