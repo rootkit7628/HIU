@@ -58,7 +58,7 @@ export default function Index() {
   const uploadFichier = async(data) => {
        try{
           await AdminService.UploadFile(data.fichier[0]).then((response) => {
-            if(data.file.length > 0){
+            if(data.fichier.length > 0){
                 uploadF(true);
                 return response.data;
             } else {

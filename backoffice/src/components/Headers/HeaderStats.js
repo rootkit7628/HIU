@@ -17,11 +17,11 @@ export default function HeaderStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Fichiers"
-                  statTitle="2"
+                  statTitle="5"
                   statArrow="up"
-                  statPercent=""
+                  statPercent="2"
                   statPercentColor="text-emerald-500"
-                  statDescripiron="Since last week"
+                  statDescripiron="Depuis last week"
                   statIconName="far fa-chart-bar"
                   statIconColor="bg-red-500"
                 />
@@ -29,11 +29,11 @@ export default function HeaderStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Download"
-                  statTitle="49"
+                  statTitle="0"
                   statArrow="up"
-                  statPercent="12"
+                  statPercent="0"
                   statPercentColor="text-emerald-500"
-                  statDescripiron="Since yeasterday"
+                  statDescripiron="Depuis hier"
                   statIconName="fas fa-percent"
                   statIconColor="bg-lightBlue-500"
                 />
