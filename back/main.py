@@ -411,24 +411,19 @@ def change_password():
 
     if user_id and old_password and new_password:
         try:
-            hashed_new_pass = str(
-                generate_password_hash(new_password).decode())
-
             CURSOR.execute(
-                "SELECT password FROM Compte WHERE id=%s", (user_id,))
+                "SELECT 1 FROM Compte WHERE id=%s AND password=SHA2(%s, 256)", (user_id, old_password,))
 
-            hashed_old_pass = CURSOR.fetchone()[0]
-            if hashed_old_pass and check_password_hash(
-                hashed_old_pass, old_password
-            ):
+            exists = CURSOR.fetchone()[0]
+            if exists:
                 CURSOR.execute("""
                     UPDATE
                         Compte
                     SET
-                        password=%s
+                        password=SHA2(%s, 256)
                     WHERE
                         id=%s;
-                    """, (hashed_new_pass, user_id)
+                    """, (new_password, user_id)
                 )
 
                 DB.commit()
