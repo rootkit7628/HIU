@@ -2,17 +2,12 @@ from ampalibe import Model
 
 
 class UserModel(Model):
-
     def __init__(self, conf):
         super().__init__(conf)
 
     @Model.verif_db
     def get_lang(self, id):
-        req = "SELECT lang from amp_user WHERE user_id = %s"
-        self.cursor.execute(req, (id,))
-        data = self.cursor.fetchone()[0]
-        self.db.commit()
-        return data
+        return 'fr'
 
     @Model.verif_db
     def set_lang(self, user_id, lang):
@@ -49,8 +44,6 @@ class Login(Model):
 class Amp_user(Model):
     def __init__(self, conf):
         super().__init__(conf)
-
-
     # ============================== GET USER ======================
     @Model.verif_db
     def getAllAmp_user(self):
@@ -125,11 +118,17 @@ class History(Model):
 
     # ========================= GET HISTORY ===========================
     @Model.verif_db
-    def getAllHistory(self):
-        requete = """SELECT id, date, attachment_id, action, user_id
-            FROM history"""
-        self.cursor.execute(requete)
-        data = self.cursor.fetchall()[0]
+    def getAllHistory(self,user_id):
+        requete = """
+            SELECT A.nom 
+            FROM history H 
+            INNER JOIN attachment A 
+            ON A.id = H.attachment_id 
+            WHERE H.user_id = %s 
+            ORDER BY date
+        """
+        self.cursor.execute(requete,(user_id,))
+        data = self.cursor.fetchall()
         self.db.commit()
         return data
 
@@ -170,23 +169,37 @@ class Attachment(History):
         return data
 
     @Model.verif_db
+    def verif_attach(self,id,token):
+        requete = """ SELECT COUNT(*) FROM attachment WHERE user_id = %s and token = %s"""
+        self.cursor.execute(requete,(id,token))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        if data == 0 :
+            return False
+        requete = """SELECT nom FROM attachment WHERE user_id = %s and token = %s LIMIT 1 """
+        self.cursor.execute(requete,(id,token))
+        data = self.cursor.fetchone()[0]
+        self.db.commit()
+        return data
+
+    @Model.verif_db
     def getAttachment(self, id):
         requete = """SELECT a.id, a.nom, a.status, a.user_id
             FROM attachmemnt a
             JOIN amp_user u ON a.user_id = u.id
             WHERE u.id = %s"""
         self.cursor.execute(requete, (id,))
-        data = self.cursor.fetchall()[0]
+        data = self.cursor.fetchone()[0]
         self.db.commit()
         return data
 
     # ======================== ADD ATTACHEMENT =====================
     @Model.verif_db
-    def addAttachment(self, nom, status, user_id):
+    def addAttachment(self, nom, status, user_id,token):
         status = 0
-        requete = """INSERT INTO attachment(nom, status, user_id)
-            VALUES(%s, %s, %s)"""
-        self.cursor.execute(requete, (nom, status, user_id))
+        requete = """INSERT INTO attachment(nom, status, user_id,token)
+            VALUES(%s, %s, %s, %s)"""
+        self.cursor.execute(requete, (nom, status, user_id,token))
         last_id = self.cursor.lastrowid
         identifiant = user_id
         self.db.commit()
