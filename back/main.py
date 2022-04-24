@@ -553,15 +553,16 @@ def get_file_v1(token):
             """, (token,)
             )
 
-            nom = CURSOR.fetchone()[0]
-            DB.commit()
+            nom = CURSOR.fetchone()
 
-            return {"url": "https://bot-hiu.iteam-s.mg/asset/" + nom}
+            DB.commit()
+            if nom:
+                return {"url": "https://bot-hiu.iteam-s.mg/asset/" + nom[0]}
 
         return {
             "error": True,
-            "message": "Pas de donnee envoye dans le formulaire."
-        }, 412
+            "message": "Erreur de token."
+        }, 403
 
     except Exception as err:
         CURSOR.close()
