@@ -11,14 +11,8 @@ import Typography from '@mui/material/Typography';
 import '../../assets/styles/cardStyle.css';
 
 
-export default function CardAllContent() {
-  /*async function deleteContent(id_content){
-     await CompteService.DeleteOneContent(id_content);
-     setContenu(contenus.filter((contenu) => {
-       return contenu.id !== id_content;
-     }))
-  }*/
 
+export default function CardAllContent() {
 
   return (
     <>

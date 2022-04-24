@@ -13,11 +13,7 @@ import IndexNavbar from "components/Navbars/IndexNavbar";
 import "../../assets/styles/Styles.css"
 
 export default function Index() {
-  const token = null;
-  const current = Login.getCurrentCompte();
-  if(current){
-    token = current.token;
-  }
+  const token = Login.getCurrentCompte().token;
   const [erreur,setErreur]=useState(false)
   const [errormessage,setErrorMessage]=useState("");
 
@@ -74,7 +70,7 @@ export default function Index() {
           src={require("assets/img/sent.gif").default}
         /> 
           <div className="main">
-              { token === null ? (
+              { token === undefined ? (
                 <div className="signup">
                   <form onSubmit={handleSubmit(onSubmit)}>
                       <label htmlFor="chk" aria-hidden="true">{t('titre-login')}</label>

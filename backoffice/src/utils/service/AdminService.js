@@ -3,24 +3,6 @@ import {Login} from "utils/service/Login";
 
 class AdminService{
                 /*ADD SERVICE*/
-    AddAccount(nom, email, tel, domaine, lien, type, password, adresse){
-        return RouteAxios.post('/add_account', {
-            nom, 
-            email, 
-            tel, 
-            domaine, 
-            lien, 
-            type, 
-            password, 
-            adresse
-        }, {
-            headers: {
-                'Authorization': `Bearer ${Login.getCurrentCompte().token}`,
-                'Content-Type': 'application/json'
-            }
-        }
-        )
-    }
     UploadFile(fichier){
         var content = new FormData();
 
@@ -34,16 +16,8 @@ class AdminService{
         return RouteAxios.get(`/get_file_v1/${token}`)
     }
 
-    getAllCompte(){
-        return RouteAxios.get("/list_accounts",  {
-                headers: {
-                    'Authorization': `Bearer ${Login.getCurrentCompte().token}`
-                }
-        })
-    }
-
     getAllContenu(){
-        return RouteAxios.get("/list_contents",  {
+        return RouteAxios.get("/list_attachements",  {
                 headers: {
                     'Authorization': `Bearer ${Login.getCurrentCompte().token}`
                 }
