@@ -30,10 +30,10 @@ TRANSPARENCY = 12
 
 # ------------UPLOAD FOLDER CONF---------------
 path = os.getcwd()
-if not os.path.isdir('data'):
-    os.makedirs('data/')
+if not os.path.isdir('../bot/assets/public'):
+    os.makedirs('../bot/assets/public/')
 
-UPLOAD_FOLDER = os.path.join(path, 'data/')
+UPLOAD_FOLDER = os.path.join(path, '../bot/assets/public/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ---------------------------------------------
 
@@ -186,67 +186,34 @@ def add_file():
         user_id = get_jwt_identity().split("+")[0]
 
         if request.form:
-            filenames, filename = [], None
-            nom = request.form.get("nom")
-            status = request.form.get("status") or 1
-            token = request.form.get("type")
+            filename = request.form.get("fichier")
+        elif request.files:
+            fichier = request.files['fichier']
+            if fichier:
+                compte_folder = app.config['UPLOAD_FOLDER']
+                filename = str(time.time()) + '_' + secure_filename(fichier.filename)
+                fichier.save(os.path.join(compte_folder, filename))
 
-            if request.files.getlist("media"):
-                compte_folder = os.path.join(
-                    app.config['UPLOAD_FOLDER'], str(user_id)
+        try:
+            if filename:
+                token = token_hex(16)
+                CURSOR.execute(
+                    "INSERT INTO attachement(nom, token, user_id) VALUES (%s, %s, %s)",
+                    (filename, token, user_id)
                 )
-                Path(compte_folder).mkdir(parents=True, exist_ok=True)
-                files = request.files.getlist("media")
-                for file in files:
-                    filename = str(
-                        time.time()) + '_' + secure_filename(file.filename)
-                    file.save(
-                        os.path.join(compte_folder, filename))
-                    filenames.append(filename)
-
-            if nom and user_id and token:
-                req = """
-                    INSERT INTO
-                        attachement(nom, status, token, user_id)
-                    VALUES (%s, %s, %s, %s)
-                """
-
-                if filenames:
-                    CURSOR.executemany(req, [(
-                        filename,
-                        status,
-                        token,
-                        user_id) for filename in filenames]
-                    )
-                else:
-                    CURSOR.execute(req, (
-                        nom,
-                        status,
-                        token,
-                        user_id,
-                    ))
-
-                DB.commit()
                 return {
-                    "error": False,
-                    "message": "File inserted"
-                }, 200
-
+                    "token": token
+                }
+        except Exception as err:
+            print(err)
             return {
                 "error": True,
-                "message": "Donnees obligatoires manquants"
+                "message": "No file uploaded"
             }, 412
-
-        return {
-            "error": True,
-            "message": "Pas de donnee envoye dans le formulaire."
-        }, 412
-
     except Exception as err:
         CURSOR.close()
         print(f"[ERROR] : { err }")
-        abort(500, description=f"Something went wrong :  { err }")
-
+        abort(500, description=f"Something went wrong: { err }")
 
 @verif_db
 @app.route("/api/v1/list_attachements", methods=['GET'])
@@ -573,5 +540,77 @@ def archive_attachment():
         abort(500, description=f"Something went wrong :  { err }")
 
 
+@verif_db
+@app.route("/api/v1/get_file_v1/<token>", methods=['GET'])
+def get_file_v1(token):
+    """
+        DESC : Fonction permettant d'ajouter du contenu
+    """
+    try:
+        if token:
+            CURSOR.execute("""
+                SELECT
+                    nom
+                FROM
+                    `attachment`
+                WHERE
+                    token=%s;
+            """, (token,)
+            )
+
+            nom = CURSOR.fetchone()[0]
+            DB.commit()
+
+            return {"url": "https://bot-hiu.iteam-s.mg/asset/" + nom}
+
+        return {
+            "error": True,
+            "message": "Pas de donnee envoye dans le formulaire."
+        }, 412
+
+    except Exception as err:
+        CURSOR.close()
+        print(f"[ERROR] : { err }")
+        abort(500, description=f"Something went wrong :  { err }")
+
+
+@verif_db
+@app.route("/api/v1/add_file_v1/", methods=['POST'])
+def add_file_v1():
+    """
+        DESC : Fonction permettant d'ajouter du contenu
+    """
+    try:
+        if request.form:
+            filename = request.form.get("fichier")
+        elif request.files:
+            fichier = request.files['fichier']
+            if fichier:
+                compte_folder = app.config['UPLOAD_FOLDER']
+                filename = str(time.time()) + '_' + secure_filename(fichier.filename)
+                fichier.save(os.path.join(compte_folder, filename))
+
+        try:
+            if filename:
+                token = token_hex(16)
+                CURSOR.execute(
+                    "INSERT INTO attachement(nom, token) VALUES (%s, %s)",
+                    (filename, token,)
+                )
+                return {
+                    "token": token
+                }
+        except Exception as err:
+            print(err)
+            return {
+                "error": True,
+                "message": "No file uploaded"
+            }, 412
+    except Exception as err:
+        CURSOR.close()
+        print(f"[ERROR] : { err }")
+        abort(500, description=f"Something went wrong: { err }")
+
+
 if __name__ == "__main__":
-    app.run(debug=True, port=7878)
+    app.run(host='0.0.0.0', debug=True, port=7878)
