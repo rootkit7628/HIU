@@ -213,7 +213,7 @@ class UserView:
             Button(
                 type="postback",
                 title="Token 🗝",
-                payload=Payload("/token", name=item[0]),
+                payload=Payload("/tokens", name=item[0]),
             )
         ]
         list_items.append(
@@ -252,7 +252,7 @@ class UserView:
                 Button(
                     type="postback",
                     title="Token🗝",
-                    payload=Payload("/token", name=item[0]),
+                    payload=Payload("/tokens", name=item[0]),
                 )
             ]
             list_items.append(

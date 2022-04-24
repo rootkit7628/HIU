@@ -73,7 +73,7 @@ def token(sender_id,cmd,**extends):
     lang = user_model.get_lang(sender_id)
     user.menu_qr_code(sender_id,lang)
 
-@ampalibe.command('/token')
+@ampalibe.command('/tokens')
 def send_token(sender_id,cmd,**extends):
     lang = user_model.get_lang(sender_id)
     user.send_tok(sender_id,lang)
