@@ -192,7 +192,7 @@ class UserView:
             query.set_action(sender_id, None)
         except Exception as e:
             chat.send_message(sender_id,"Désolé 😢, il y a eu une érreur lors du télechargement, veuillez réessayez s'il vous plaît")
-    
+            query.set_action(sender_id, None)
     def send_file(self,sender_id,cmd):
         chat.send_action(sender_id,"mark_seen")      
         chat.send_message(sender_id,"On va vérifier si votre fichier existe")
