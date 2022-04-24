@@ -1,8 +1,10 @@
 import React from "react";
 
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import {Login} from "utils/service/Login";
 
 export default function Navbar() {
+  const compte = Login.getCurrentCompte();
   return (
     <>
       {/* Navbar */}
@@ -10,11 +12,11 @@ export default function Navbar() {
         <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
           {/* Brand */}
           <a
-            className="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+            className="text-white text-sm  hidden lg:inline-block font-semibold"
             href="#pablo"
             onClick={(e) => e.preventDefault()}
           >
-            Welcome
+            Welcome  {"   "} {compte.username}
           </a>
           {/* Form */}
           <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">

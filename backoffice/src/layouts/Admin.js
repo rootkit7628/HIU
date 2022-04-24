@@ -31,7 +31,7 @@ export default function Admin() {
             <AdminRoute path="/admin/add" exact >
                 <Add />
             </AdminRoute>
-            <Redirect from="/admin" to="/erreur" />
+            <Redirect from="/admin" to="/admin/statistique" />
           </Switch>
     </>
   );

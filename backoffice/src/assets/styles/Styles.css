@@ -11,14 +11,9 @@
 	justify-content: space-around;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: #1B9476; /*couleur*/
+	background: #e0dede; /*couleur*/
 }
 
-@media screen and (max-width: 910px) {
-	.accueil{
-		
-	}
-}
 
 
 .forms-envoie{
@@ -28,6 +23,20 @@
 
 
 .index{
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	min-height: 100vh;
+	font-family: 'Jost', sans-serif;
+	background: #e0dede; /*couleur*/
+}
+
+.upload{
 	margin: 0;
 	margin-right: 60px;
 	padding: 0;
@@ -39,16 +48,16 @@
 	justify-content: flex-start;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: #1B9476; /*couleur*/
 }
+
 .main{
 	width: 350px;
 	height: 500px;
-	background: #1B9476;
 	overflow: hidden;
 	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
 	border-radius: 10px;
-	box-shadow: 5px 20px 50px #000;
+	background: linear-gradient(164deg, rgba(61, 135, 226, 1) 25%, rgba(36, 114, 205, 1) 73%);
+	box-shadow: 5px 20px 50px rgb(54, 54, 54);
 }
 #chk{
 	display: none;
@@ -58,6 +67,7 @@
 	width:100%;
 	height: 100%;
 }
+
 .signup label{
 	color: #fff;
 	font-size: 1.6em;
@@ -79,7 +89,7 @@
 	transition: .5s ease-in-out;
 }
 .signup .btn-login, .login .btn-upload{
-	background-color: #124660;
+	background-color: #374151;
 	cursor: pointer;
 	color: white;
 	width: 60%;
@@ -150,7 +160,7 @@ button:hover{
 	border-radius: 10px;
 }
 .login label{
-	color: #1B9476;
+	color: rgb(30, 104, 193);
 	transform: scale(.6);
 }
 

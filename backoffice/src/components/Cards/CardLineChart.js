@@ -7,28 +7,21 @@ export default function CardLineChart() {
       type: "line",
       data: {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
+          "Janvier",
+          "Février",
+          "Mars",
+          "Avril",
+          "Mai",
+          "Juin",
+          "Juillet",
         ],
         datasets: [
           {
             label: new Date().getFullYear(),
-            backgroundColor: "#008080",
-            borderColor: "#008080",
-            data: [65, 78, 66, 44, 56, 67, 75],
+            backgroundColor: "rgba(36, 114, 205, 1)",
+            borderColor: "rgba(36, 114, 205, 1)",
+            data: [5, 0, 1, 3, 7, 8, 12],
             fill: false,
-          },
-          {
-            label: new Date().getFullYear() - 1,
-            fill: false,
-            backgroundColor: "#fff",
-            borderColor: "#fff",
-            data: [40, 68, 86, 74, 56, 60, 87],
           },
         ],
       },
@@ -115,11 +108,11 @@ export default function CardLineChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Courbe
               </h6>
-              <h2 className="text-white text-xl font-semibold">Nouveaux étudiants</h2>
+              <h2 className="text-white text-xl font-semibold">Effectif de télechargement</h2>
             </div>
           </div>
         </div>
-        <div className="p-4 flex-auto">
+        <div className="p-2 flex-auto">
           {/* Chart */}
           <div className="relative h-350-px">
             <canvas id="line-chart"></canvas>

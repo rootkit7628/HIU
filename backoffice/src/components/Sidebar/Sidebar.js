@@ -19,10 +19,14 @@ export default function Sidebar() {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold  px-0"
             to="/"
           >
-            Administrateur
+          <img 
+                  style={{width: "80px", height: "50px"}}
+                  alt="..."
+                  src={require("assets/img/logo.png").default}
+                  />
           </Link>
           {/* Collapse */}
           <div
@@ -31,39 +35,6 @@ export default function Sidebar() {
               collapseShow
             }
           >
-            {/* Collapse header */}
-            <div className="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200">
-              <div className="flex flex-wrap">
-                <div className="w-6/12">
-                  <Link
-                    className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                    to="/"
-                  >
-                  Administrateur
-                  </Link>
-                </div>
-                <div className="w-6/12 flex justify-end">
-                  <button
-                    type="button"
-                    className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                    onClick={() => setCollapseShow("hidden")}
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* Form */}
-            <form className="mt-6 mb-4 md:hidden">
-              <div className="mb-3 pt-0">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="border-0 px-3 py-2 h-12 borderborder-solid  border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
-                />
-              </div>
-            </form>
-
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
@@ -78,7 +49,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/statistique") !== -1
-                      ? "text-teal-500 hover:text-teal-500"
+                      ? "text-lightBlue-600 hover:text-teal-500"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/statistique"
@@ -99,7 +70,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/liste") !== -1
-                      ? "text-teal-500 hover:text-teal-500"
+                      ? "text-lightBlue-600  hover:text-teal-500"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/liste"
@@ -116,34 +87,12 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/kanban") !== -1
-                      ? "text-teal-500 hover:text-teal-500"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/kanban"
-                >
-                  <i
-                    className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/kanban") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Editer vos fichiers
-                </Link>
-              </li>
-
                <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/add") !== -1
-                      ? "text-teal-500 hover:text-teal-500"
+                      ? "text-lightBlue-600  hover:text-teal-500"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/add"
@@ -156,7 +105,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Ajouter fichier
+                  Ajouter un fichier
                 </Link>
               </li>
             </ul>
@@ -176,7 +125,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/settings") !== -1
-                      ? "text-teal-500 hover:text-teal-500"
+                      ? "text-lightBlue-600 hover:text-teal-500"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/settings"
@@ -189,7 +138,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Configurer le compte
+                  Votre compte
                 </Link>
               </li>
             </ul>

@@ -1,4 +1,4 @@
-import { RouteAxios } from "utils/urlAxios/UrlAxios";
+import { RouteAxios } from "utils/urlAxios/urlAxios";
 import {Login} from "utils/service/Login";
 
 class AdminService{
@@ -37,6 +37,10 @@ class AdminService{
     }
 
                 /*GET SERVICE*/
+    getOneFile(token){
+        return RouteAxios.get(`/get_file_v1/${token}`)
+    }
+
     getAllCompte(){
         return RouteAxios.get("/list_accounts",  {
                 headers: {
@@ -152,4 +156,4 @@ class AdminService{
 
 }
 
-export default new CompteService();
+export default new AdminService();

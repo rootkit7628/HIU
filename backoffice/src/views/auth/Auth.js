@@ -1,21 +1,21 @@
 /*eslint-disable*/
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import { useHistory } from "react-router";
-/*import { Link } from "react-router-dom";*/
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import {Login} from "utils/service/Login";
-import AuthNavbar from "components/Navbars/AuthNavbar";
+import IndexNavbar from "components/Navbars/IndexNavbar";
 
 import "../../assets/styles/Styles.css"
 
 export default function Index() {
-
+  const token = Login.getCurrentCompte().token;
   const [erreur,setErreur]=useState(false)
   const [errormessage,setErrorMessage]=useState("");
-  const [type, setType] = useState("password");
 
   const validationSchema = Yup.object().shape({
     client: Yup.string(),
@@ -36,9 +36,8 @@ export default function Index() {
 
   let history = useHistory();
   const onSubmit = (data) => {
-        data.client = "back-office";
         try {
-            Login.login(data.client, data.username, data.password).then(
+            Login.login( data.username, data.password).then(
                 (response) => {
                   if(response.token){
                      history.push('/admin/statistique');
@@ -54,40 +53,49 @@ export default function Index() {
         }
   }
 
-  function viewPassword(e){
-    let check = e.target.checked;
-    check ? setType("text") : setType("password");
+  const { t, i18n } = useTranslation();
+
+  const changeLanguageHandler = (e) => {
+    const languageValue = e.target.value
+    i18n.changeLanguage(languageValue);
   }
 
   return (
     <>
-      <AuthNavbar />
+      <IndexNavbar />
       <div className="index">
         <img 
           className="image-illustration"
           alt="..."
-          src={require("assets/img/computer-login.gif").default}
+          src={require("assets/img/sent.gif").default}
         /> 
-        <div className="main">
-        <input type="checkbox" id="chk" aria-hidden="true" />
+          <div className="main">
+              { token === undefined ? (
+                <div className="signup">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                      <label htmlFor="chk" aria-hidden="true">{t('titre-login')}</label>
+                      <input className="username" type="text" name="prenom" placeholder={t('placeholder-login')} {...register('username')} /><p className="bold italic text-white" style={{margin: '0px 0px 0px 55px'}}>{errors.username?.message}</p>
+                      <input className="password" type="password" name="password" placeholder={t('placeholder-password-login')} {...register('password')} /><p className="bold italic text-white"  style={{margin: '0px 0px 0px 55px'}}>{errors.password?.message}</p>
+                      <input type="submit" className="btn btn-login" value={t('bouton-login')} />
+                    { erreur &&(
+                            <div className="bg-red-500 border border-red-500 text-red-700 px-4 py-3 mx-2 rounded relative" role="alert">
+                              <strong className="font-bold">Erreur!</strong>
+                              <span className="block sm:inline">{errormessage} </span>
+                              <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                                  <svg onClick={()=>{setErreur(false)}} className="fill-current h-5 w-12 text-red-400" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                              </span>
+                            </div>
+                        )}
+                  </form>
+                </div>
+              ) : (
+                  <div className="signup mt-32 flex align-middle ite">
+                      <Link  className="btn w-full" to="/admin/statistique"><button>{t('bouton-entrer')}</button></Link>
+                  </div>
+              )
 
-          <div className="signup">
-            <form>
-                <label htmlFor="chk" aria-hidden="true">Télechager fichier</label>
-                <input className="username" type="text" name="token" placeholder="Votre token ici..."  />
-                <input type="submit" className="btn btn-login" value="Télecharger" />
-               
-            </form>
+              }
           </div>
-
-          <div className="login">
-            <form >
-                <label htmlFor="chk" aria-hidden="true">Upload fichier</label>
-                <input type="file" name="file" placeholder="Votre token ici..."  />
-                <input type="submit" className="btn btn-upload" value="Upload" />
-            </form>
-        </div>
-      </div>
       </div>
     </>
   );

@@ -1,0 +1,16 @@
+{
+  "langue": "Language",
+  "titre":"Welcome to",
+  "description" : "Roso is a cross-platform file transfer app that allows sharing files on mobile and desktop. While Bluetooth and xender technology has improved with the new version having four times more range and better capacity, not every device equips the latest Bluetooth adn xender technology. Besides, it becomes cumbersome to transfer large files from device to another instantly",
+  "connexion":"login",
+  "titre-telecharge":"Download file",
+  "placeholder-telecharge":"Your token here...",
+  "bouton-verification":"Verification",
+  "bouton-telecharger":"Download",
+  "titre-upload":"Upload file",
+  "bouton-upload": "Upload",
+  "titre-login":"Login",
+  "placeholder-login":"Last name...",
+  "placeholder-password-login":"Password...",
+  "bouton-login":"Login"
+}

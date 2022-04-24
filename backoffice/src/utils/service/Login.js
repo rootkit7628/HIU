@@ -1,12 +1,10 @@
 import { RouteAxios } from "utils/urlAxios/urlAxios";
 
 
-function login(client, username, password){
-    return RouteAxios.post("/login/",{
-        client, username, password
-    }, {headers: {
-                'Content-Type': 'application/json'
-            }})
+function login( username, password){
+    return RouteAxios.post("/login",{
+         username, password
+    })
     .then((response) => {
         if(response.data.token){
             localStorage.setItem("admin", JSON.stringify(response.data));

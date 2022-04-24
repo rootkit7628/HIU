@@ -8,7 +8,7 @@ import "assets/styles/tailwind.css";
 // layouts
 
 import Admin from "layouts/Admin.js";
-
+import "./i18n.js";
 // views without layouts
 
 import Index from "views/Index.js";

@@ -1,0 +1,16 @@
+{
+  "langue": "Teny",
+  "titre":"Tongasoa eto amin'ny",
+  "description":"Roso dia fampiharana famindrana rakitra miampita sehatra ahafahana mizara rakitra amin'ny finday sy solosaina. Na dia nihatsara aza ny teknolojia Bluetooth sy xender miaraka amin'ny dikan-teny vaovao manana avo efatra heny amin'ny halavirana sy fahaiza-manao tsara kokoa, tsy ny fitaovana rehetra no manana ny teknolojia farany indrindra Bluetooth sy xender.",
+  "connexion":"Hiditra",
+  "titre-telecharge":"Misintona",
+  "placeholder-telecharge":"Ny mari-pamantaranao eto...",
+  "bouton-verification":"Hamarinina",
+  "bouton-telecharger":"Alaina",
+  "titre-upload":"Alefa",
+  "bouton-upload": "Alefa",
+  "titre-login":"Hiditra",
+  "placeholder-login":"Fanampin'anarana...",
+  "placeholder-password-login":"Teny miafina...",
+  "bouton-login":"Hiditra"
+}
