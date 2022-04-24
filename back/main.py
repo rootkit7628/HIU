@@ -108,8 +108,9 @@ def login():
                 account["token"] = create_access_token(
                     str(str(account.get("id")) + "+" + account.get("username"))
                 )
+
+                DB.commit()
                 return account, 200
-            DB.commit()
             return {
                 "error": True,
                 "message": "Email/password incorrect"
@@ -384,23 +385,6 @@ def update_attachment():
         abort(500, description=f"Something went wrong :  { err }")
 
 
-@app.route('/api/v1/get_attachement/<user_id>/<attachement>', methods=['GET'])
-def get_attachement(user_id, attachement):
-    """
-        DESC : Fonction permettant de récuperer un fichier
-    """
-    try:
-        if user_id:
-            compte_folder = os.path.join(
-                app.config['UPLOAD_FOLDER'], str(user_id)
-            )
-            return send_from_directory(
-                directory=compte_folder, path=attachement)
-    except Exception as err:
-        print(f"[ERROR] : { err }")
-        abort(500, description=f"Something went wrong :  { err }")
-
-
 @app.route('/api/v1/change_password', methods=['PATCH'])
 @jwt_required()
 def change_password():
@@ -553,11 +537,11 @@ def get_file_v1(token):
             """, (token,)
             )
 
+            DB.commit()
             nom = CURSOR.fetchone()
 
-            DB.commit()
             if nom:
-                return {"url": "https://bot-hiu.iteam-s.mg/asset/" + nom[0]}
+                return {"url": "https://hiu-api.iteam-s.mg/api/v1/get_attachment/" + nom[0]}
 
         return {
             "error": True,
@@ -581,6 +565,7 @@ def add_file_v1():
             filename = request.form.get("fichier")
         elif request.files:
             fichier = request.files['fichier']
+            print(fichier)
             if fichier:
                 compte_folder = app.config['UPLOAD_FOLDER']
                 filename = str(time.time()) + '_' + secure_filename(fichier.filename)
@@ -590,9 +575,10 @@ def add_file_v1():
             if filename:
                 token = token_hex(16)
                 CURSOR.execute(
-                    "INSERT INTO attachement(nom, token) VALUES (%s, %s)",
-                    (filename, token,)
+                    "INSERT INTO attachment(nom, token, user_id) VALUES (%s, %s, %s)",
+                    (filename, token, '0121231321',)
                 )
+                DB.commit()
                 return {
                     "token": token
                 }
@@ -608,5 +594,13 @@ def add_file_v1():
         abort(500, description=f"Something went wrong: { err }")
 
 
+@app.route('/api/v1/get_attachment/<nom>', methods=['GET'])
+def get_attachement(nom):
+    """
+        DESC : Fonction permettant de récuperer un fichier
+    """
+    return send_from_directory(directory=app.config['UPLOAD_FOLDER'], path=nom, as_attachment=True)
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=7878)
+    app.run(host='0.0.0.0', debug=True, port=10001)

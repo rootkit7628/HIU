@@ -55,9 +55,9 @@ export default function Navbar(props) {
                       id="flag"
                     >
                         <option  hidden>{t('langue')}</option>
-                        <option key="1" value="mg">Malagasy</option>
+                        <option key="1" value="mg">🇲🇬 Malagasy</option>
                         <option key="2" value="fr">🇫🇷 Français</option>
-                        <option key="3" value="en">Anglais</option>
+                        <option key="3" value="en">🇬🇧 Anglais</option>
                   </select>
               </li>
 
