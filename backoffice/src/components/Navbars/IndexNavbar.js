@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import "../../assets/styles/Styles.css"
 
 export default function Navbar(props) {
   const { t, i18n } = useTranslation();
@@ -51,6 +52,7 @@ export default function Navbar(props) {
                       style={{backgroundColor: "#e0dede", border: "none"}}
                       className=" px-3 py-3 placeholder-blueGray-300 text-blueGray-600  rounded text-sm shadow focus:outline-none focus:ring w-12/12 ease-linear transition-all duration-150"
                       onChange={changeLanguageHandler}
+                      id="flag"
                     >
                         <option  hidden>{t('langue')}</option>
                         <option key="1" value="mg">🇲🇬 Malagasy</option>

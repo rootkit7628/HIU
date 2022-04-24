@@ -7,20 +7,20 @@ export default function CardLineChart() {
       type: "line",
       data: {
         labels: [
-          "Janvier",
-          "Février",
-          "Mars",
-          "Avril",
-          "Mai",
-          "Juin",
-          "Juillet",
+          "Lundi",
+          "Mardi",
+          "Mercredi",
+          "Jeudi",
+          "Vendredi",
+          "Samedi",
+          "Dimanche",
         ],
         datasets: [
           {
             label: new Date().getFullYear(),
             backgroundColor: "rgba(36, 114, 205, 1)",
             borderColor: "rgba(36, 114, 205, 1)",
-            data: [5, 0, 1, 3, 7, 8, 12],
+            data: [0, 0, 0, 0, 0, 8, 9],
             fill: false,
           },
         ],

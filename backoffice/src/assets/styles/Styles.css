@@ -199,3 +199,8 @@ button:hover{
 	flex-direction: row;
 	margin: 0px 110px;
 }
+
+/*FLAG INPUT*/
+option[value="mg"]   { background-image:url(../img/mg.png);   }
+option[value="fr"] { background-image:url('../img/fr.png'); }
+option[value="en"] { background-image:url('../img/en.jpeg'); }

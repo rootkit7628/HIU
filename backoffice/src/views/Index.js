@@ -18,13 +18,16 @@ export default function Index() {
     i18n.changeLanguage(languageValue);
   }
   const [isUrlGet, setIsUrlget] = useState(false);
+   const [uploadF, setIsUploadF] = useState(false);
 
   const [erreur,setErreur]=useState(false)
   const [errormessage,setErrorMessage]=useState("");
 
   const validationSchema = Yup.object().shape({
     token: Yup.string()
-      .required('token is required')
+      .required('token is required'),
+    fichier: Yup.mixed()
+      .required("Votre fichier, n'oubliez pas!!!")
   });
   const {
     register,
@@ -35,12 +38,12 @@ export default function Index() {
   });
 
 
-  const getUrlFile = (data) => {
+  const getUrlFile = async(data) => {
       try{
-          AdminService.getOneFile(data.token).then((response) => {
+          await AdminService.getOneFile(data.token).then((response) => {
             if(response.status === 200){
                 setIsUrlget(true);
-                return console.log(response.data);
+                return response.data;
             } else {
                 setErreur(true);
                 setErrorMessage("Désolé ce token n'existe pas...");
@@ -52,6 +55,22 @@ export default function Index() {
       }
   }
   
+  const uploadFichier = async(data) => {
+       try{
+          await AdminService.UploadFile(data.fichier[0]).then((response) => {
+            if(data.fichier.length > 0){
+                uploadF(true);
+                return response.data;
+            } else {
+                setErreur(true);
+                setErrorMessage("Désolé le fichier n'a pas pu être envoyé...");
+            }
+        })
+      } catch (error){
+          setErreur(true);
+          setErrorMessage("Désolé le fichier n'a pas pu être envoyé...");
+      }
+  }
   
   return (
     <>
@@ -66,20 +85,20 @@ export default function Index() {
                         <label htmlFor="chk" aria-hidden="true">{t('titre-telecharge')}</label>
                         <input className="username" type="text" name="token" placeholder={t('placeholder-telecharge')} {...register('token')} /><p className="bold italic text-white" style={{margin: '0px 0px 0px 55px'}}>{errors.token?.message}</p>
                         <input type="submit" className="btn btn-login" value={t('bouton-verification')} />
-                        {isUrlGet && (
+                    </form>
+                    {isUrlGet && (
                             <>
                               <label htmlFor="chk" aria-hidden="true" style={{fontSize: "16px", marginLeft: "55px", color: "rgb(5, 238, 129)"}} >Ok, vous pouvez telecharger votre fichier...</label>
-                              <input type="button" className="btn btn-login" value={t('bouton-telecharger')}  />
+                              <a href="/sary/binary_eol.jpg" download ><input type="button" className="btn btn-login" value={t('bouton-telecharger')}  /></a>
                             </>
                         ) 
-                        }
-                    </form>
+                    }
                   </div>
 
                   <div className="login">
-                    <form >
+                    <form onSubmit={handleSubmit(uploadFichier)}>
                         <label htmlFor="chk" aria-hidden="true">{t('titre-upload')}</label>
-                        <input type="file" name="file" />
+                        <input type="file" name="file" {...register('fichier')} /> <p className="text-red-500 italic">{errors.fichier?.message}</p>
                         <input type="submit" className="btn btn-upload" value={t('bouton-upload')} />
                     </form>
                   </div>
