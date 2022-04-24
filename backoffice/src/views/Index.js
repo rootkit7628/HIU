@@ -18,7 +18,8 @@ export default function Index() {
     i18n.changeLanguage(languageValue);
   }
   const [isUrlGet, setIsUrlget] = useState(false);
-   const [uploadF, setIsUploadF] = useState(false);
+  const [uploadF, setIsUploadF] = useState(false);
+  const [urlFile, setUrlFile] = useState("");
 
   const [erreur,setErreur]=useState(false)
   const [errormessage,setErrorMessage]=useState("");
@@ -43,7 +44,7 @@ export default function Index() {
           await AdminService.getOneFile(data.token).then((response) => {
             if(response.status === 200){
                 setIsUrlget(true);
-                return response.data;
+                setUrlFile(response.data.url);
             } else {
                 setErreur(true);
                 setErrorMessage("Désolé ce token n'existe pas...");
@@ -71,7 +72,6 @@ export default function Index() {
           setErrorMessage("Désolé le fichier n'a pas pu être envoyé...");
       }
   }
-  
   return (
     <>
       <IndexNavbar />
@@ -89,7 +89,7 @@ export default function Index() {
                     {isUrlGet && (
                             <>
                               <label htmlFor="chk" aria-hidden="true" style={{fontSize: "16px", marginLeft: "55px", color: "rgb(5, 238, 129)"}} >Ok, vous pouvez telecharger votre fichier...</label>
-                              <a href="/sary/binary_eol.jpg" download ><input type="button" className="btn btn-login" value={t('bouton-telecharger')}  /></a>
+                              <a href={urlFile} download={urlFile} target="_blank" ><input type="button" className="btn btn-login" value={t('bouton-telecharger')}  /></a>
                             </>
                         ) 
                     }
@@ -117,7 +117,7 @@ export default function Index() {
                     <Link
                       to="/authentification"
                       style={{backgroundColor: "rgba(36, 114, 205, 1"}}
-                      className="animate-spin text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mb-1  active:bg-lightBlue-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+                      className="text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mb-1 btn-vers-connexion uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
                     >
                       {t('connexion')}
                     </Link>
@@ -125,6 +125,7 @@ export default function Index() {
                       style={{width: "80px", height: "50px"}}
                       alt="..."
                       src={require("assets/img/logo.png").default}
+                      className="animate-waving-hand "
                       /> 
                   </div>              
             </div>

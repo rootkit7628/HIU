@@ -2,15 +2,15 @@ import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
-import {useHistory} from "react-router";
 import AdminService from "utils/service/AdminService";
 
 
 export default function CardAdd() {
   const [erreur,setErreur]=useState(false);
   const [errorMesssage,setErrorMessage]=useState("");
- 
-  let history = useHistory();
+  const [jeton, setJeton] = useState("");
+  const [isJeton, setIsJeton] = useState(false);
+
 
   const validationSchema = Yup.object().shape({
         fichier: Yup.mixed()
@@ -31,14 +31,16 @@ export default function CardAdd() {
 
   const  handleAddFile = async(data) => {
         try {
-            await AdminService.UploadFile(data.fichier[0]);
+            await AdminService.UploadFile(data.fichier[0]).then((response) => {
+               
             if(data.fichier.length > 0){
-                history.push('/admin/liste');
+                setJeton(response.data.token);
+                setIsJeton(true);
             }else{
                 setErreur(true);
                 setErrorMessage("Echec à la l'ajout du fichier");
             }
-
+          });
 
         } catch (error) {
             setErreur(true)
@@ -46,9 +48,6 @@ export default function CardAdd() {
         }
     }
     
-
-
-   
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-12/12 mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
@@ -89,6 +88,11 @@ export default function CardAdd() {
                             </span>
                   </div>
           )}
+          { isJeton && (
+              <p className="text-blueGray-700 mr-auto ml-auto mb-6 -mt-12">Voici le token pour récupérer ce fichier :<span className="font-bold text-lg text-teal-500"> {jeton} </span></p>
+          )
+
+          }
       </div>
     </>
   );

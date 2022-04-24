@@ -94,6 +94,11 @@
 	color: white;
 	width: 60%;
 }
+
+.signup .btn-login:active, .login .btn-upload:active, .btn-vers-connexion:active{
+	background-color: #1B9476;
+}
+
 .signup .username{
 	margin-top: 70px;
 }

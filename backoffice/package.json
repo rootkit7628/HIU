@@ -17,6 +17,7 @@
     "ave": "^0.0.1-0",
     "axios": "^0.21.4",
     "chart.js": "2.9.4",
+    "file-saver": "^2.0.5",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
     "i18next": "^21.6.16",
