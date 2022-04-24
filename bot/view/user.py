@@ -209,6 +209,11 @@ class UserView:
                 type="postback",
                 title="Télecharger📂",
                 payload=Payload("/download", name=res),
+            ),
+            Button(
+                type="postback",
+                title="Token 🗝",
+                payload=Payload("/token", name=item[0]),
             )
         ]
         list_items.append(
@@ -227,7 +232,11 @@ class UserView:
         chat.send_action(sender_id,"mark_seen") 
         chat.send_file_url(sender_id, f"{conf.APP_URL}/asset/{name}")
         query.set_action(sender_id, None)
-
+    def send_tok(self,sender_id ,name):
+        chat.send_action(sender_id,"mark_seen") 
+        chat.send_message(sender_id,"Voici le token.")
+        chat.send_message(sender_id,"49cbfcc292cc9c686aea64d24e1c6333")
+        query.set_action(sender_id, None)
     def historique(self,sender_id,lang):
         chat.send_action(sender_id,"mark_seen")  
         chat.send_message(sender_id,"Voici l'historique de vos transferts.")
@@ -239,6 +248,11 @@ class UserView:
                     type="postback",
                     title="Télecharger📂",
                     payload=Payload("/download", name=item[0]),
+                ),
+                Button(
+                    type="postback",
+                    title="Token🗝",
+                    payload=Payload("/token", name=item[0]),
                 )
             ]
             list_items.append(
