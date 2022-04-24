@@ -21,19 +21,12 @@ class AdminService{
         }
         )
     }
-    AddContenu(titre, description, type, link){
+    UploadFile(fichier){
         var content = new FormData();
 
-        content.append("titre", titre);
-        content.append("description", description);
-        content.append("type", type);
-        content.append("file", link);
+        content.append("fichier", fichier);
 
-        return RouteAxios.post('/add_content', content,{
-            headers: {
-                'Authorization': `Bearer ${Login.getCurrentCompte().token}`
-            }
-        })
+        return RouteAxios.post('/add_file_v1/', content)
     }
 
                 /*GET SERVICE*/
