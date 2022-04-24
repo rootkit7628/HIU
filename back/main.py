@@ -581,6 +581,7 @@ def add_file_v1():
             filename = request.form.get("fichier")
         elif request.files:
             fichier = request.files['fichier']
+            print(fichier)
             if fichier:
                 compte_folder = app.config['UPLOAD_FOLDER']
                 filename = str(time.time()) + '_' + secure_filename(fichier.filename)
@@ -590,8 +591,8 @@ def add_file_v1():
             if filename:
                 token = token_hex(16)
                 CURSOR.execute(
-                    "INSERT INTO attachement(nom, token) VALUES (%s, %s)",
-                    (filename, token,)
+                    "INSERT INTO attachment(nom, token, user_id) VALUES (%s, %s, %s)",
+                    (filename, token, '0121231321',)
                 )
                 return {
                     "token": token
@@ -609,4 +610,4 @@ def add_file_v1():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=7878)
+    app.run(host='0.0.0.0', debug=True, port=10001)
